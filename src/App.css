@@ -3,6 +3,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 16px;
+  overflow-x: hidden; /* prevent horizontal overflow on mobile */
 }
 
 .app-main {
@@ -10,6 +11,9 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-areas:
+    "invoice"
+    "form";
   gap: 20px;
   align-items: start;
 }
@@ -21,6 +25,9 @@
   }
   .app-main {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "invoice"
+      "form";
     gap: 24px;
   }
 }
@@ -32,6 +39,8 @@
   }
   .app-main {
     grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "form invoice";
     gap: 30px;
   }
 }
@@ -63,6 +72,15 @@
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+}
+
+/* Area assignments for mobile order */
+.form-section { grid-area: form; }
+.invoice-section { grid-area: invoice; }
+
+/* Ensure inner content doesn't overflow */
+.form-section, .invoice-section {
+  overflow-x: hidden;
 }
 
 .invoice-section h2 {

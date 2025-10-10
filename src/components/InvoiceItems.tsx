@@ -58,15 +58,15 @@ const InvoiceItems: React.FC<InvoiceItemsProps> = ({ items, onItemsChange }) => 
                 step="0.01"
                 required
               />
+              <button
+                type="button"
+                onClick={() => removeItem(item.id)}
+                className="remove-item-btn"
+                disabled={items.length === 1}
+              >
+                Remove
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={() => removeItem(item.id)}
-              className="remove-item-btn"
-              disabled={items.length === 1}
-            >
-              Remove
-            </button>
           </div>
         ))}
       </div>

@@ -94,7 +94,19 @@ function App() {
       </header>
       
       <main className="app-main">
-        <div className="form-section">
+        <div className="invoice-section" style={{ gridArea: 'invoice' }}>
+          <h2>Invoice Preview</h2>
+          <InvoiceDisplay 
+            billFrom={billFrom}
+            userInfo={userInfo} 
+            items={items} 
+            total={total} 
+            subtotal={subtotal}
+            extraCharges={extraCharges}
+          />
+        </div>
+
+        <div className="form-section" style={{ gridArea: 'form' }}>
           <BillFromForm
             billFrom={billFrom}
             onBillFromChange={handleBillFromChange}
@@ -118,18 +130,6 @@ function App() {
           <div className="total-display">
             <h3>Total Amount: ₹{total.toFixed(2)}</h3>
           </div>
-        </div>
-        
-        <div className="invoice-section">
-          <h2>Invoice Preview</h2>
-          <InvoiceDisplay 
-            billFrom={billFrom}
-            userInfo={userInfo} 
-            items={items} 
-            total={total} 
-            subtotal={subtotal}
-            extraCharges={extraCharges}
-          />
         </div>
       </main>
     </div>

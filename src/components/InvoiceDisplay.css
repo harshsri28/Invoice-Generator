@@ -7,6 +7,7 @@
   max-width: 100%;
   margin: 0 auto;
   font-family: 'Arial', sans-serif;
+  overflow-x: hidden; /* prevent horizontal overflow */
 }
 
 .invoice-header {
@@ -71,6 +72,8 @@
   background: #fafafa;
   border-radius: 4px;
   overflow: hidden;
+  table-layout: fixed; /* prevent overflow by fixing layout */
+  word-wrap: break-word; /* wrap long text inside cells */
 }
 
 .invoice-table th,
@@ -78,6 +81,8 @@
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  white-space: normal; /* allow wrapping */
+  word-break: break-word; /* break long words */
 }
 
 .invoice-table th {
@@ -112,8 +117,14 @@
 
 .invoice-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center; /* center on mobile */
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
   margin-bottom: 12px;
+  overflow-x: hidden; /* extra safety */
 }
 
 /* Hide actions when exporting to PDF */
@@ -130,10 +141,45 @@
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 100%; /* full-width on mobile to avoid overflow */
+  max-width: 100%;
+  text-align: center;
+  min-width: 0;
 }
 
 .download-btn:hover {
   background: #43a047;
+}
+
+/* Force desktop-like layout during export for consistent PDFs */
+.invoice-display.exporting {
+  width: 800px;
+  max-width: 800px;
+  padding: 24px;
+}
+
+.invoice-display.exporting .invoice-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.invoice-display.exporting .invoice-details {
+  text-align: right;
+}
+
+.invoice-display.exporting .invoice-parties {
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.invoice-table th,
+.invoice-table td {
+  padding: 15px;
+}
+
+.total-row {
+  font-size: 1.1rem;
 }
 
 /* Tablet */
@@ -172,6 +218,14 @@
 
   .total-row {
     font-size: 1.1rem;
+  }
+
+  /* Desktop-like button alignment on tablet/desktop */
+  .invoice-actions {
+    justify-content: flex-end;
+  }
+  .download-btn {
+    width: auto;
   }
 }
 
