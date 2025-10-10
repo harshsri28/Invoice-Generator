@@ -1,46 +1,69 @@
-# Getting Started with Create React App
+# Invoice Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple, responsive React app to create professional invoices. It supports "Bill From" and "Bill To" sections, itemized costs, optional PDF export, and optional custom extra charges (such as GST or handling fees).
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Bill From and Bill To details with clean layout
+- Add, edit, and remove invoice items
+- Automatic subtotal and final total calculation
+- Optional extra charges:
+  - Percentage-based (e.g., 18% GST)
+  - Fixed amount (e.g., ₹50 Handling Fee)
+  - Custom charge names (e.g., "GST percent", "Handling charge", "Shipping")
+  - Multiple charges supported
+- Invoice preview with subtotal, charges breakdown, and final total
+- Download PDF button that is hidden inside the exported PDF
+- Responsive design for desktop and mobile
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Prerequisites
+- Node.js (LTS recommended)
+- npm
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Install
+```
+npm install
+```
 
-### `npm test`
+### Run
+```
+npm start
+```
+Open `http://localhost:3002` (the dev server may run on a custom port).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Usage
 
-### `npm run build`
+1. Fill in "Bill From" and "Bill To" details.
+2. Add your invoice items and set costs.
+3. (Optional) Add Extra Charges:
+   - In the Extra Charges section, click "Add Extra Charge".
+   - Type a custom charge name like "GST", "Handling", or "Shipping".
+   - Choose "Percent %" and enter a percentage (e.g., 18 for 18% GST), or choose "Fixed Amount" and enter a rupee amount.
+   - Add multiple charges if needed and remove any charge with the Remove button.
+4. Review the invoice preview. It shows subtotal, each extra charge, and the final total.
+5. Click "Download PDF" to export the invoice as a PDF. The button is hidden in the exported file itself.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Example: 18% GST on ₹100
+- Subtotal: ₹100.00
+- GST (18%): ₹18.00
+- Total: ₹118.00
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `src/App.tsx` — Main app composition and state (items, subtotal, extra charges, total)
+- `src/components/BillFromForm.tsx` — Bill From form
+- `src/components/UserInfoForm.tsx` — Bill To form
+- `src/components/InvoiceItems.tsx` — Items list and editing
+- `src/components/ExtraCharges.tsx` — Extra charges management (percent/fixed)
+- `src/components/InvoiceDisplay.tsx` — Invoice preview, subtotal/charges breakdown, and PDF export
 
-### `npm run eject`
+## Notes
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Extra charges are entirely optional. If you don’t add them, the total equals the subtotal.
+- The PDF export uses `html2canvas` and `jspdf`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## License
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is provided as-is for personal or educational use.

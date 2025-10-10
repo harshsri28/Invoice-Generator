@@ -4,6 +4,7 @@ import InvoiceItems from './components/InvoiceItems';
 import InvoiceDisplay from './components/InvoiceDisplay';
 import './App.css';
 import BillFromForm from './components/BillFromForm';
+import ExtraCharges, { ExtraCharge } from './components/ExtraCharges';
 
 interface UserInfo {
   name: string;
@@ -46,13 +47,26 @@ function App() {
     { id: Date.now(), itemName: '', itemCost: 0 }
   ]);
 
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [extraCharges, setExtraCharges] = useState<ExtraCharge[]>([]);
   const [total, setTotal] = useState<number>(0);
 
-  // Automatic total calculation
+  // Automatic subtotal calculation
   useEffect(() => {
-    const calculatedTotal = items.reduce((sum, item) => sum + item.itemCost, 0);
-    setTotal(calculatedTotal);
+    const calculatedSubtotal = items.reduce((sum, item) => sum + (Number(item.itemCost) || 0), 0);
+    setSubtotal(calculatedSubtotal);
   }, [items]);
+
+  // Recalculate total when extra charges or subtotal change
+  useEffect(() => {
+    const chargesTotal = extraCharges.reduce((sum, charge) => {
+      if (charge.type === 'percent') {
+        return sum + (subtotal * (Number(charge.value) || 0)) / 100;
+      }
+      return sum + (Number(charge.value) || 0);
+    }, 0);
+    setTotal(subtotal + chargesTotal);
+  }, [extraCharges, subtotal]);
 
   const handleUserInfoChange = (field: keyof UserInfo, value: string) => {
     setUserInfo(prev => ({
@@ -95,6 +109,12 @@ function App() {
             onItemsChange={handleItemsChange} 
           />
           
+          <ExtraCharges
+            charges={extraCharges}
+            onChargesChange={setExtraCharges}
+            subtotal={subtotal}
+          />
+          
           <div className="total-display">
             <h3>Total Amount: ₹{total.toFixed(2)}</h3>
           </div>
@@ -107,6 +127,8 @@ function App() {
             userInfo={userInfo} 
             items={items} 
             total={total} 
+            subtotal={subtotal}
+            extraCharges={extraCharges}
           />
         </div>
       </main>

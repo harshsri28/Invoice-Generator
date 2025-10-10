@@ -24,14 +24,23 @@ interface InvoiceItem {
   itemCost: number;
 }
 
+interface ExtraCharge {
+  id: number;
+  name: string;
+  type: 'percent' | 'fixed';
+  value: number;
+}
+
 interface InvoiceDisplayProps {
   billFrom: BillFromInfo;
   userInfo: UserInfo;
   items: InvoiceItem[];
   total: number;
+  subtotal?: number;
+  extraCharges?: ExtraCharge[];
 }
 
-const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, items, total }) => {
+const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, items, total, subtotal, extraCharges }) => {
   const invoiceRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadPDF = async () => {
@@ -65,6 +74,15 @@ const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, ite
     } finally {
       element.classList.remove('exporting');
     }
+  };
+
+  const formatCurrency = (amount: number) => `₹${amount.toFixed(2)}`;
+
+  const computeChargeAmount = (charge: ExtraCharge, base: number) => {
+    if (charge.type === 'percent') {
+      return (base * (Number(charge.value) || 0)) / 100;
+    }
+    return Number(charge.value) || 0;
   };
 
   return (
@@ -111,7 +129,7 @@ const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, ite
               {items.map((item) => (
                 <tr key={item.id}>
                   <td>{item.itemName || 'Unnamed Item'}</td>
-                  <td>₹{item.itemCost.toFixed(2)}</td>
+                  <td>{formatCurrency(item.itemCost)}</td>
                 </tr>
               ))}
               {items.length === 0 && (
@@ -121,9 +139,27 @@ const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, ite
               )}
             </tbody>
             <tfoot>
+              {typeof subtotal === 'number' && (
+                <tr>
+                  <td><strong>Subtotal:</strong></td>
+                  <td><strong>{formatCurrency(subtotal)}</strong></td>
+                </tr>
+              )}
+
+              {Array.isArray(extraCharges) && extraCharges.map((charge) => (
+                <tr key={`ch-${charge.id}`}>
+                  <td>
+                    {charge.type === 'percent'
+                      ? `${charge.name || 'Percent charge'} ${charge.value}%`
+                      : `${charge.name || 'Fixed charge'} ${formatCurrency(charge.value)}`}
+                  </td>
+                  <td><strong>{formatCurrency(computeChargeAmount(charge, subtotal || 0))}</strong></td>
+                </tr>
+              ))}
+
               <tr className="total-row">
                 <td><strong>Total:</strong></td>
-                <td><strong>₹{total.toFixed(2)}</strong></td>
+                <td><strong>{formatCurrency(total)}</strong></td>
               </tr>
             </tfoot>
           </table>
