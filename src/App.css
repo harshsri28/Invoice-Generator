@@ -1,9 +1,42 @@
+/* Mobile-first adjustments */
 .App {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+  padding: 16px;
 }
 
+.app-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .App {
+    padding: 18px;
+  }
+  .app-main {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .App {
+    padding: 20px;
+  }
+  .app-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+/* Existing styles retained */
 .app-header {
   text-align: center;
   margin-bottom: 40px;
@@ -11,96 +44,46 @@
 }
 
 .app-header h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 10px;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .app-header p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   opacity: 0.9;
   font-weight: 300;
 }
 
-.app-main {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  align-items: start;
-}
-
-.form-section {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-}
-
+.form-section,
 .invoice-section {
   background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
 }
 
 .invoice-section h2 {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   color: #333;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
 }
 
 .total-display {
   background: #e8f5e8;
-  padding: 20px;
+  padding: 16px;
   border-radius: 8px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 16px;
   border: 2px solid #4CAF50;
 }
 
 .total-display h3 {
   margin: 0;
   color: #2e7d32;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
-}
-
-/* Responsive design */
-@media (max-width: 1024px) {
-  .app-main {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .App {
-    padding: 15px;
-  }
-  
-  .app-header h1 {
-    font-size: 2rem;
-  }
-  
-  .form-section,
-  .invoice-section {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-header h1 {
-    font-size: 1.8rem;
-  }
-  
-  .form-section,
-  .invoice-section {
-    padding: 15px;
-  }
 }

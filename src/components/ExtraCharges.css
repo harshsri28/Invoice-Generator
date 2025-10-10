@@ -1,5 +1,6 @@
+/* Mobile-first extra charges */
 .extra-charges {
-  margin-top: 20px;
+  margin-top: 16px;
   padding: 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -8,7 +9,7 @@
 
 .extra-charges h2 {
   margin: 0 0 12px 0;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 .charges-list {
@@ -19,21 +20,18 @@
 
 .charge-row {
   display: grid;
-  grid-template-columns: 1fr 140px 140px auto auto;
+  grid-template-columns: 1fr 120px 120px auto auto;
   gap: 8px;
   align-items: center;
 }
 
-.charge-name-input {
-  padding: 8px;
-}
-
-.charge-type-select {
-  padding: 8px;
-}
-
+.charge-name-input,
+.charge-type-select,
 .charge-value-input {
-  padding: 8px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .charge-amount {
@@ -54,7 +52,7 @@
   background: #1976d2;
   color: white;
   border: none;
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -72,7 +70,24 @@
 }
 
 .summary-row.total {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
-@media (max-width:
+/* Tablet */
+@media (min-width: 768px) {
+  .extra-charges {
+    margin-top: 20px;
+  }
+
+  .extra-charges h2 {
+    font-size: 1.25rem;
+  }
+
+  .charge-row {
+    grid-template-columns: 1fr 140px 140px auto auto;
+  }
+
+  .summary-row.total {
+    font-size: 1.05rem;
+  }
+}

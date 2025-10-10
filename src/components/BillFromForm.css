@@ -1,27 +1,29 @@
+/* Mobile-first Bill From form */
 .bill-from-form {
   background: #ffffff;
-  padding: 25px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .bill-from-form h2 {
   color: #333;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   font-weight: 500;
   color: #555;
+  font-size: 0.95rem;
 }
 
 .form-group input,
@@ -39,4 +41,21 @@
   outline: none;
   border-color: #4CAF50;
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .bill-from-form {
+    padding: 25px;
+    margin-bottom: 20px;
+  }
+
+  .bill-from-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
 }
