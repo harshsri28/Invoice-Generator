@@ -29,11 +29,29 @@
 .form-group input,
 .form-group textarea {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0; /* prevent overflow in narrow viewports */
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
   transition: border-color 0.3s ease;
+}
+
+/* iOS Safari: ensure date input doesn't overflow and removes default appearance that can push width */
+.form-group input[type="date"] {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Safety: prevent any inner calendar indicator spacing from causing overflow */
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+  margin: 0;
+  padding: 0;
 }
 
 .form-group input:focus,
