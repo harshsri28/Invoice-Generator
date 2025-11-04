@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import './InvoiceDisplay.css';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -38,9 +38,14 @@ interface InvoiceDisplayProps {
   total: number;
   subtotal?: number;
   extraCharges?: ExtraCharge[];
+  invoiceNumber?: string;
 }
 
-const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, items, total, subtotal, extraCharges }) => {
+export interface InvoiceDisplayHandle {
+  downloadPDF: () => Promise<void>;
+}
+
+const InvoiceDisplay = React.forwardRef<InvoiceDisplayHandle, InvoiceDisplayProps>(function InvoiceDisplay({ billFrom, userInfo, items, total, subtotal, extraCharges, invoiceNumber }, ref) {
   const invoiceRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadPDF = async () => {
@@ -76,6 +81,10 @@ const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, ite
     }
   };
 
+  useImperativeHandle(ref, () => ({
+    downloadPDF: handleDownloadPDF
+  }));
+
   const formatCurrency = (amount: number) => `₹${amount.toFixed(2)}`;
 
   const computeChargeAmount = (charge: ExtraCharge, base: number) => {
@@ -91,7 +100,7 @@ const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, ite
         <h1>INVOICE</h1>
         <div className="invoice-details">
           {userInfo.date && (<p><strong>Date:</strong> {userInfo.date}</p>)}
-          <p><strong>Invoice #:</strong> {Date.now().toString().slice(-6)}</p>
+          <p><strong>Invoice #:</strong> {invoiceNumber || Date.now().toString().slice(-6)}</p>
         </div>
       </div>
 
@@ -167,6 +176,6 @@ const InvoiceDisplay: React.FC<InvoiceDisplayProps> = ({ billFrom, userInfo, ite
       </div>
     </div>
   );
-};
+});
 
 export default InvoiceDisplay;

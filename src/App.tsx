@@ -1,138 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import UserInfoForm from './components/UserInfoForm';
-import InvoiceItems from './components/InvoiceItems';
-import InvoiceDisplay from './components/InvoiceDisplay';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import InvoiceGenerator from './components/InvoiceGenerator';
 import './App.css';
-import BillFromForm from './components/BillFromForm';
-import ExtraCharges, { ExtraCharge } from './components/ExtraCharges';
-
-interface UserInfo {
-  name: string;
-  date: string;
-  address: string;
-  phoneNumber: string;
-}
-
-interface BillFromInfo {
-  companyName: string;
-  companyAddress: string;
-  companyPhone: string;
-  companyEmail: string;
-  gstNumber?: string;
-}
-
-interface InvoiceItem {
-  id: number;
-  itemName: string;
-  itemCost: number;
-}
+import ThankYou from './pages/ThankYou';
+import InvoiceEditor from './pages/InvoiceEditor';
 
 function App() {
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    name: '',
-    date: new Date().toISOString().split('T')[0],
-    address: '',
-    phoneNumber: ''
-  });
-
-  const [billFrom, setBillFrom] = useState<BillFromInfo>({
-    companyName: '',
-    companyAddress: '',
-    companyPhone: '',
-    companyEmail: '',
-    gstNumber: ''
-  });
-
-  const [items, setItems] = useState<InvoiceItem[]>([
-    { id: Date.now(), itemName: '', itemCost: 0 }
-  ]);
-
-  const [subtotal, setSubtotal] = useState<number>(0);
-  const [extraCharges, setExtraCharges] = useState<ExtraCharge[]>([]);
-  const [total, setTotal] = useState<number>(0);
-
-  // Automatic subtotal calculation
-  useEffect(() => {
-    const calculatedSubtotal = items.reduce((sum, item) => sum + (Number(item.itemCost) || 0), 0);
-    setSubtotal(calculatedSubtotal);
-  }, [items]);
-
-  // Recalculate total when extra charges or subtotal change
-  useEffect(() => {
-    const chargesTotal = extraCharges.reduce((sum, charge) => {
-      if (charge.type === 'percent') {
-        return sum + (subtotal * (Number(charge.value) || 0)) / 100;
-      }
-      return sum + (Number(charge.value) || 0);
-    }, 0);
-    setTotal(subtotal + chargesTotal);
-  }, [extraCharges, subtotal]);
-
-  const handleUserInfoChange = (field: keyof UserInfo, value: string) => {
-    setUserInfo(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleBillFromChange = (field: keyof BillFromInfo, value: string) => {
-    setBillFrom(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleItemsChange = (newItems: InvoiceItem[]) => {
-    setItems(newItems);
-  };
-
   return (
-    <div className="App">
-      <header className="app-header">
-        <h1>Invoice Generator</h1>
-        <p>Create professional invoices quickly and easily</p>
-      </header>
-      
-      <main className="app-main">
-        <div className="invoice-section" style={{ gridArea: 'invoice' }}>
-          <h2>Invoice Preview</h2>
-          <InvoiceDisplay 
-            billFrom={billFrom}
-            userInfo={userInfo} 
-            items={items} 
-            total={total} 
-            subtotal={subtotal}
-            extraCharges={extraCharges}
-          />
-        </div>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<Login />} />
+            
+            {/* Protected Routes */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/create-invoice" element={
+              <ProtectedRoute>
+                <InvoiceGenerator />
+              </ProtectedRoute>
+            } />
 
-        <div className="form-section" style={{ gridArea: 'form' }}>
-          <BillFromForm
-            billFrom={billFrom}
-            onBillFromChange={handleBillFromChange}
-          />
-          <UserInfoForm 
-            userInfo={userInfo} 
-            onUserInfoChange={handleUserInfoChange} 
-          />
-          
-          <InvoiceItems 
-            items={items} 
-            onItemsChange={handleItemsChange} 
-          />
-          
-          <ExtraCharges
-            charges={extraCharges}
-            onChargesChange={setExtraCharges}
-            subtotal={subtotal}
-          />
-          
-          <div className="total-display">
-            <h3>Total Amount: ₹{total.toFixed(2)}</h3>
-          </div>
+            <Route path="/invoice/:id" element={
+              <ProtectedRoute>
+                <InvoiceEditor />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/thank-you" element={
+              <ProtectedRoute>
+                <ThankYou />
+              </ProtectedRoute>
+            } />
+            
+            {/* Default redirect */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            
+            {/* Catch all route */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
         </div>
-      </main>
-    </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

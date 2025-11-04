@@ -129,8 +129,9 @@
   }
 
   .item-cost-input {
-    flex: 1;
-  }
+  flex: 1;
+  max-width: 200px;
+}
 
   .remove-item-btn {
     width: auto;

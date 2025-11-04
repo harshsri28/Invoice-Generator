@@ -1,69 +1,111 @@
-# Invoice Generator
+# Invoice Generator - Phase 1
 
-A simple, responsive React app to create professional invoices. It supports "Bill From" and "Bill To" sections, itemized costs, optional PDF export, and optional custom extra charges (such as GST or handling fees).
+A modern invoice generator application with Google authentication, built with React and TypeScript.
 
-## Features
+## Phase 1 Features Implemented
 
-- Bill From and Bill To details with clean layout
-- Add, edit, and remove invoice items
-- Automatic subtotal and final total calculation
-- Optional extra charges:
-  - Percentage-based (e.g., 18% GST)
-  - Fixed amount (e.g., ₹50 Handling Fee)
-  - Custom charge names (e.g., "GST percent", "Handling charge", "Shipping")
-  - Multiple charges supported
-- Invoice preview with subtotal, charges breakdown, and final total
-- Download PDF button that is hidden inside the exported PDF
-- Responsive design for desktop and mobile
+### ✅ Authentication System
+- **Google Sign-In Integration**: Complete Google OAuth authentication using `@react-oauth/google`
+- **Protected Routes**: Route protection using React Router and authentication context
+- **JWT Token Management**: Secure token storage and management
+- **User State Management**: Centralized authentication state using React Context
+- **Login/Logout Functionality**: Complete authentication flow with logout capability
 
-## Getting Started
+### ✅ User Interface
+- **Login Page**: Modern, responsive login page with Google Sign-In button
+- **Dashboard**: User dashboard displaying invoices and navigation options
+- **Invoice Generator**: Full-featured invoice creation interface
+- **Responsive Design**: Mobile-first responsive design with Tailwind CSS
 
-### Prerequisites
-- Node.js (LTS recommended)
-- npm
+## Tech Stack
 
-### Install
-```
-npm install
-```
-
-### Run
-```
-npm start
-```
-Open `http://localhost:3002` (the dev server may run on a custom port).
-
-## Usage
-
-1. Fill in "Bill From" and "Bill To" details.
-2. Add your invoice items and set costs.
-3. (Optional) Add Extra Charges:
-   - In the Extra Charges section, click "Add Extra Charge".
-   - Type a custom charge name like "GST", "Handling", or "Shipping".
-   - Choose "Percent %" and enter a percentage (e.g., 18 for 18% GST), or choose "Fixed Amount" and enter a rupee amount.
-   - Add multiple charges if needed and remove any charge with the Remove button.
-4. Review the invoice preview. It shows subtotal, each extra charge, and the final total.
-5. Click "Download PDF" to export the invoice as a PDF. The button is hidden in the exported file itself.
-
-### Example: 18% GST on ₹100
-- Subtotal: ₹100.00
-- GST (18%): ₹18.00
-- Total: ₹118.00
+- **Frontend**: React 19.2.0 with TypeScript
+- **Routing**: React Router DOM v6
+- **Authentication**: Google Identity Services (@react-oauth/google)
+- **State Management**: React Context API
+- **Styling**: Custom CSS with responsive design
+- **Build Tool**: Create React App
 
 ## Project Structure
 
-- `src/App.tsx` — Main app composition and state (items, subtotal, extra charges, total)
-- `src/components/BillFromForm.tsx` — Bill From form
-- `src/components/UserInfoForm.tsx` — Bill To form
-- `src/components/InvoiceItems.tsx` — Items list and editing
-- `src/components/ExtraCharges.tsx` — Extra charges management (percent/fixed)
-- `src/components/InvoiceDisplay.tsx` — Invoice preview, subtotal/charges breakdown, and PDF export
+```
+src/
+├── components/
+│   ├── ProtectedRoute.tsx      # Route protection component
+│   └── InvoiceGenerator.tsx    # Main invoice generation interface
+├── contexts/
+│   └── AuthContext.tsx         # Authentication state management
+├── pages/
+│   ├── Login.tsx              # Login page with Google Sign-In
+│   └── Dashboard.tsx          # User dashboard
+├── App.tsx                    # Main app with routing
+└── index.tsx                  # App entry point
+```
 
-## Notes
+## Getting Started
 
-- Extra charges are entirely optional. If you don’t add them, the total equals the subtotal.
-- The PDF export uses `html2canvas` and `jspdf`.
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Set up Google OAuth**
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select existing
+   - Enable Google+ API
+   - Create OAuth 2.0 credentials
+   - Add `http://localhost:3000` to authorized JavaScript origins
+   - Copy your Client ID
+
+3. **Configure Environment**
+   Create a `.env` file in the root directory:
+   ```
+   REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id_here
+   ```
+
+4. **Start Development Server**
+   ```bash
+   npm start
+   ```
+
+5. **Open Application**
+   Navigate to `http://localhost:3000` in your browser
+
+## Authentication Flow
+
+1. User visits the application
+2. Redirected to login page if not authenticated
+3. Google Sign-In button initiates OAuth flow
+4. Successful authentication stores user data and JWT token
+5. User is redirected to dashboard
+6. Protected routes ensure authentication status
+
+## Current Limitations (To be addressed in Phase 2)
+
+- Mock authentication (no backend integration yet)
+- No real invoice data persistence
+- No invoice editing functionality
+- No PDF generation
+- No user profile management
+
+## Next Steps (Phase 2)
+
+- Backend API implementation
+- Database integration
+- Real invoice CRUD operations
+- PDF generation and download
+- Invoice editing capabilities
+- User profile management
+- Invoice status tracking
+
+## Development Notes
+
+- All TypeScript compilation errors resolved
+- Responsive design implemented for mobile and desktop
+- Modern UI with clean, professional styling
+- Component-based architecture for maintainability
+- Context API for state management
 
 ## License
 
-This project is provided as-is for personal or educational use.
+This project is part of the invoice generator application development.
