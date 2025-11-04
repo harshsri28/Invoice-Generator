@@ -7,7 +7,7 @@ import './Login.css';
 const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {

@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import './InvoiceDisplay.css';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
