@@ -205,7 +205,7 @@ const InvoiceGenerator: React.FC = () => {
                   setSaving(true);
                   if (token) setAuthToken(token);
                   const payload = buildPayload();
-                  const created = await createInvoice(payload);
+                  await createInvoice(payload);
                   navigate('/dashboard');
                 } catch (err: any) {
                   console.error('Save draft failed:', err);
