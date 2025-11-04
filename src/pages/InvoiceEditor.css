@@ -1,0 +1,14 @@
+/* InvoiceEditor page-specific minimal styles; main layout comes from InvoiceGenerator.css */
+
+.editor-loading,
+.editor-error {
+  padding: 24px;
+  text-align: center;
+}
+
+.editor-error {
+  color: #b91c1c;
+}
+
+/* Remove legacy styles that conflicted with InvoiceItems */
+/* Note: Do not style .item-row, .item-inputs, or item inputs here. */

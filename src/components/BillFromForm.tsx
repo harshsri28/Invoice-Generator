@@ -1,5 +1,5 @@
-import React from 'react';
-import './BillFromForm.css';
+import React from "react";
+import "./BillFromForm.css";
 
 interface BillFromInfo {
   companyName: string;
@@ -14,7 +14,10 @@ interface BillFromFormProps {
   onBillFromChange: (field: keyof BillFromInfo, value: string) => void;
 }
 
-const BillFromForm: React.FC<BillFromFormProps> = ({ billFrom, onBillFromChange }) => {
+const BillFromForm: React.FC<BillFromFormProps> = ({
+  billFrom,
+  onBillFromChange,
+}) => {
   return (
     <div className="bill-from-form">
       <h2>Bill From</h2>
@@ -24,7 +27,7 @@ const BillFromForm: React.FC<BillFromFormProps> = ({ billFrom, onBillFromChange 
           type="text"
           id="companyName"
           value={billFrom.companyName}
-          onChange={(e) => onBillFromChange('companyName', e.target.value)}
+          onChange={(e) => onBillFromChange("companyName", e.target.value)}
           placeholder="Enter company name"
           required
         />
@@ -34,7 +37,7 @@ const BillFromForm: React.FC<BillFromFormProps> = ({ billFrom, onBillFromChange 
         <textarea
           id="companyAddress"
           value={billFrom.companyAddress}
-          onChange={(e) => onBillFromChange('companyAddress', e.target.value)}
+          onChange={(e) => onBillFromChange("companyAddress", e.target.value)}
           placeholder="Enter company address"
           rows={3}
           required
@@ -46,7 +49,7 @@ const BillFromForm: React.FC<BillFromFormProps> = ({ billFrom, onBillFromChange 
           type="tel"
           id="companyPhone"
           value={billFrom.companyPhone}
-          onChange={(e) => onBillFromChange('companyPhone', e.target.value)}
+          onChange={(e) => onBillFromChange("companyPhone", e.target.value)}
           placeholder="Enter company phone"
           required
         />
@@ -57,7 +60,7 @@ const BillFromForm: React.FC<BillFromFormProps> = ({ billFrom, onBillFromChange 
           type="email"
           id="companyEmail"
           value={billFrom.companyEmail}
-          onChange={(e) => onBillFromChange('companyEmail', e.target.value)}
+          onChange={(e) => onBillFromChange("companyEmail", e.target.value)}
           placeholder="Enter company email"
           required
         />
@@ -67,8 +70,8 @@ const BillFromForm: React.FC<BillFromFormProps> = ({ billFrom, onBillFromChange 
         <input
           type="text"
           id="gstNumber"
-          value={billFrom.gstNumber || ''}
-          onChange={(e) => onBillFromChange('gstNumber', e.target.value)}
+          value={billFrom.gstNumber || ""}
+          onChange={(e) => onBillFromChange("gstNumber", e.target.value)}
           placeholder="Enter GST number"
         />
       </div>
