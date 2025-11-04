@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getInvoiceById, updateInvoice, setAuthToken } from '../services/api';
@@ -57,7 +57,10 @@ const InvoiceEditor: React.FC = () => {
   });
   const [items, setItems] = useState<InvoiceItem[]>([]);
   const [currency, setCurrency] = useState<'INR' | 'USD'>('INR');
-  const [subtotal, setSubtotal] = useState<number>(0);
+  // Derive subtotal from items to avoid unused setter lint error in CI
+  const subtotal = useMemo<number>(() => {
+    return items.reduce((sum, item) => sum + (Number(item.itemCost) || 0), 0);
+  }, [items]);
   const displayRef = React.useRef<InvoiceDisplayHandle>(null);
   const [extraCharges, setExtraCharges] = useState<ExtraCharge[]>([]);
   const [total, setTotal] = useState<number>(0);
@@ -115,8 +118,8 @@ const InvoiceEditor: React.FC = () => {
       }
       return sum + (Number(charge.value) || 0);
     }, 0);
-    setTotal(items.reduce((s, i) => s + (Number(i.itemCost) || 0), 0) + chargesTotal);
-  }, [items, extraCharges, subtotal]);
+    setTotal(subtotal + chargesTotal);
+  }, [subtotal, extraCharges]);
 
   const handleUserInfoChange = (field: keyof UserInfo, value: string) => {
     setUserInfo(prev => ({ ...prev, [field]: value }));
