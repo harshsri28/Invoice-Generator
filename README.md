@@ -5,6 +5,7 @@ A modern invoice generator application with Google authentication, built with Re
 ## Phase 1 Features Implemented
 
 ### ✅ Authentication System
+
 - **Google Sign-In Integration**: Complete Google OAuth authentication using `@react-oauth/google`
 - **Protected Routes**: Route protection using React Router and authentication context
 - **JWT Token Management**: Secure token storage and management
@@ -12,6 +13,7 @@ A modern invoice generator application with Google authentication, built with Re
 - **Login/Logout Functionality**: Complete authentication flow with logout capability
 
 ### ✅ User Interface
+
 - **Login Page**: Modern, responsive login page with Google Sign-In button
 - **Dashboard**: User dashboard displaying invoices and navigation options
 - **Invoice Generator**: Full-featured invoice creation interface
@@ -45,11 +47,13 @@ src/
 ## Getting Started
 
 1. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Set up Google OAuth**
+
    - Go to [Google Cloud Console](https://console.cloud.google.com/)
    - Create a new project or select existing
    - Enable Google+ API
@@ -59,11 +63,13 @@ src/
 
 3. **Configure Environment**
    Create a `.env` file in the root directory:
+
    ```
    REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id_here
    ```
 
 4. **Start Development Server**
+
    ```bash
    npm start
    ```
